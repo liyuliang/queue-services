@@ -24,10 +24,15 @@ func TestService(t *testing.T) {
 		return err
 	})
 
-	// set up 5 goroutine to run
-	Service().SetWorkerNum(5).Start()
-
-
+	// Async
+	// build up 5 goroutine under a clide goroutine to run
+	Service().SetWorkerNum(5).Start(false)
 	// after 3 second, all goroutine will stop
 	time.Sleep(time.Second * 3)
+
+	// Sync
+	//or you can run forever to setting isBlock:true
+	//Service().SetWorkerNum(5).Start(true)
+
+
 }

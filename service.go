@@ -30,9 +30,20 @@ func (s *service) SetWorkerNum(num int) *service {
 	return s
 }
 
-func (s *service) Start() {
+func (s *service) Start(isBlock bool) {
 
-	go run()
+	if isBlock {
+		wg := sync.WaitGroup{}
+		wg.Add(1)
+
+		run()
+
+		wg.Wait()
+
+	} else {
+
+		go run()
+	}
 }
 
 func run() {
