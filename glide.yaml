@@ -1,0 +1,3 @@
+package: queue-services
+import:
+- package: gitee.com/liyuliang/utils
