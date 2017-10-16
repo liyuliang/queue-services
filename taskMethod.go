@@ -18,3 +18,17 @@ func AddMultiProcessTask(methodName string, method taskMethod) {
 func AddSingleProcessTask(methodName string, method taskMethod) {
 	singleProcessTasks[methodName] = method
 }
+
+func GetMultiProcessTaskNames() (names []string) {
+	for name, _ := range multiProcessTasks {
+		names = append(names, name)
+	}
+	return names
+}
+
+func GetSingleProcessTaskNames() (names []string) {
+	for name, _ := range singleProcessTasks {
+		names = append(names, name)
+	}
+	return names
+}

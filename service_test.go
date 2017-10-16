@@ -33,6 +33,34 @@ func TestService(t *testing.T) {
 	// Sync
 	//or you can run forever to setting isBlock:true
 	//Service().SetWorkerNum(5).Start(true)
+}
 
+func TestGetServiceNames(t *testing.T) {
 
+	AddMultiProcessTask("m-method 1", func(workerNum int) (err error) {
+		return
+	})
+	AddMultiProcessTask("m-method 2", func(workerNum int) (err error) {
+		return
+	})
+	AddMultiProcessTask("m-method 3", func(workerNum int) (err error) {
+		return
+	})
+
+	AddSingleProcessTask("s-method 1", func(workerNum int) (err error) {
+		return
+	})
+
+	AddSingleProcessTask("s-method 2", func(workerNum int) (err error) {
+		return
+	})
+
+	names := GetMultiProcessTaskNames()
+	if len(names) != 3 {
+		t.Error("GetMultiProcessTaskNames should be 3,but get",len(names))
+	}
+	names = GetSingleProcessTaskNames()
+	if len(names) != 2 {
+		t.Error("GetSingleProcessTaskNames should be 2,but get",len(names))
+	}
 }
