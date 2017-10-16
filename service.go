@@ -41,7 +41,7 @@ func (s *service) Start(isBlock bool) {
 
 	} else {
 
-		go run()
+		run()
 	}
 }
 
