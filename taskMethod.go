@@ -1,6 +1,6 @@
 package services
 
-type taskMethod func(workerNum int) error
+type taskMethod func(workerNum int) (err error)
 
 var multiProcessTasks map[string]taskMethod
 var singleProcessTasks map[string]taskMethod
