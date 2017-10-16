@@ -4,7 +4,6 @@ import (
 	"runtime"
 	"sync"
 	"time"
-	"gitee.com/liyuliang/utils/format"
 )
 
 var workerNum int = 5
@@ -79,7 +78,7 @@ func multiProcessRun(method taskMethod) {
 						sleepSecond = 3
 					}
 
-					time.Sleep(format.IntToTimeSecond(sleepSecond))
+					time.Sleep(time.Second * time.Duration(sleepSecond))
 				}
 			}(i)
 		}
@@ -92,15 +91,15 @@ func singleProcessRun(method taskMethod) {
 	go func() {
 
 		for {
-			_sleepSecond := 1
+			sleepSecond := 1
 
 			err := method(0)
 			if err != nil {
 
-				_sleepSecond = 3
+				sleepSecond = 3
 			}
 
-			time.Sleep(format.IntToTimeSecond(_sleepSecond))
+			time.Sleep(time.Second * time.Duration(sleepSecond))
 		}
 	}()
 }
