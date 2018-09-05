@@ -9,24 +9,21 @@ func TestService(t *testing.T) {
 
 	AddMultiProcessTask("test println hello", func(workerNum int) (err error) {
 		println("hello ~")
-
 		return err
 	})
 	AddMultiProcessTask("test println world", func(workerNum int) (err error) {
 		println("world ~")
-
 		return err
 	})
 
-	AddSingleProcessTask("test pringln --- ", func(workerNum int) (err error) {
+	AddSingleProcessTask("test println --- ", func(workerNum int) (err error) {
 		println("---")
-
 		return err
 	})
 
 	// Async
 	// build up 5 goroutine under a clide goroutine to run
-	Service().SetWorkerNum(5).Start(false)
+	Service().SetWorkerNum(5).setIsLog(false).Start(false)
 	// after 3 second, all goroutine will stop
 	time.Sleep(time.Second * 3)
 
@@ -36,6 +33,9 @@ func TestService(t *testing.T) {
 }
 
 func TestGetServiceNames(t *testing.T) {
+
+	multiProcessTasks = make(map[string]taskMethod)
+	singleProcessTasks = make(map[string]taskMethod)
 
 	AddMultiProcessTask("m-method 1", func(workerNum int) (err error) {
 		return

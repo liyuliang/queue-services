@@ -4,9 +4,12 @@ import (
 	"runtime"
 	"sync"
 	"time"
+	"log"
 )
 
 var workerNum int = 5
+
+var isLog bool = true
 
 type service struct {
 }
@@ -22,6 +25,11 @@ func Service() *service {
 	}
 
 	return _service
+}
+
+func (s *service) setIsLog(is bool) *service {
+	isLog = is
+	return s
 }
 
 func (s *service) SetWorkerNum(num int) *service {
@@ -47,20 +55,20 @@ func (s *service) Start(isBlock bool) {
 
 func run() {
 
-	for _, multiProcessTask := range multiProcessTasks {
+	for taskName, multiProcessTask := range multiProcessTasks {
 
-		multiProcessRun(multiProcessTask)
+		multiProcessRun(taskName, multiProcessTask)
 	}
 
-	for _, singleProcessTask := range singleProcessTasks {
+	for taskName, singleProcessTask := range singleProcessTasks {
 
-		singleProcessRun(singleProcessTask)
+		singleProcessRun(taskName, singleProcessTask)
 	}
 }
 
-func multiProcessRun(method taskMethod) {
+func multiProcessRun(taskName string, method taskMethod) {
 
-	go func() {
+	go func(name string) {
 
 		wg := sync.WaitGroup{}
 		wg.Add(workerNum)
@@ -68,7 +76,9 @@ func multiProcessRun(method taskMethod) {
 		for i := 0; i < workerNum; i++ {
 
 			go func(workerNum int) {
-
+				if isLog {
+					log.Printf("Task %s is running, current worker is %d \n", name, workerNum)
+				}
 				for {
 					sleepSecond := 1
 
@@ -83,16 +93,19 @@ func multiProcessRun(method taskMethod) {
 			}(i)
 		}
 		wg.Wait()
-	}()
+	}(taskName)
 }
 
-func singleProcessRun(method taskMethod) {
+func singleProcessRun(taskName string, method taskMethod) {
 
-	go func() {
+	go func(name string) {
 
 		for {
 			sleepSecond := 1
+			if isLog {
 
+				log.Printf("Task %s is running \n", name)
+			}
 			err := method(0)
 			if err != nil {
 
@@ -101,5 +114,5 @@ func singleProcessRun(method taskMethod) {
 
 			time.Sleep(time.Second * time.Duration(sleepSecond))
 		}
-	}()
+	}(taskName)
 }
