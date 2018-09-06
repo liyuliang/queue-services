@@ -77,16 +77,18 @@ func multiProcessRun(taskName string, method taskMethod) {
 
 			go func(workerNum int) {
 				if isLog {
-					log.Printf("Task %s is running, current worker is %d \n", name, workerNum)
+					log.Printf("Task %s is running, current worker is %d, ", name, workerNum)
 				}
 				for {
 					sleepSecond := 1
 
 					err := method(workerNum)
 					if err != nil {
+						log.Printf("but it get error :%s", err.Error())
 
 						sleepSecond = 3
 					}
+					log.Printf("\n")
 
 					time.Sleep(time.Second * time.Duration(sleepSecond))
 				}
@@ -103,14 +105,15 @@ func singleProcessRun(taskName string, method taskMethod) {
 		for {
 			sleepSecond := 1
 			if isLog {
-
-				log.Printf("Task %s is running \n", name)
+				log.Printf("Task %s is running, ", name)
 			}
 			err := method(0)
 			if err != nil {
+				log.Printf("but it get error :%s", err.Error())
 
 				sleepSecond = 3
 			}
+			log.Printf("\n")
 
 			time.Sleep(time.Second * time.Duration(sleepSecond))
 		}
