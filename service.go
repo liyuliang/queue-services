@@ -88,7 +88,6 @@ func multiProcessRun(taskName string, method taskMethod) {
 
 						sleepSecond = 3
 					}
-					log.Printf("\n")
 
 					time.Sleep(time.Second * time.Duration(sleepSecond))
 				}
@@ -113,7 +112,6 @@ func singleProcessRun(taskName string, method taskMethod) {
 
 				sleepSecond = 3
 			}
-			log.Printf("\n")
 
 			time.Sleep(time.Second * time.Duration(sleepSecond))
 		}
