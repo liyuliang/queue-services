@@ -27,7 +27,7 @@ func Service() *service {
 	return _service
 }
 
-func (s *service) setIsLog(is bool) *service {
+func (s *service) SetIsLog(is bool) *service {
 	isLog = is
 	return s
 }

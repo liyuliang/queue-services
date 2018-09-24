@@ -23,7 +23,7 @@ func TestService(t *testing.T) {
 
 	// Async
 	// build up 5 goroutine under a clide goroutine to run
-	Service().SetWorkerNum(5).setIsLog(false).Start(false)
+	Service().SetWorkerNum(5).SetIsLog(false).Start(false)
 	// after 3 second, all goroutine will stop
 	time.Sleep(time.Second * 3)
 
