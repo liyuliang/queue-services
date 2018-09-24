@@ -4,12 +4,9 @@ import (
 	"runtime"
 	"sync"
 	"time"
-	"log"
 )
 
 var workerNum int = 5
-
-var isLog bool = true
 
 type service struct {
 }
@@ -27,8 +24,8 @@ func Service() *service {
 	return _service
 }
 
-func (s *service) SetIsLog(is bool) *service {
-	isLog = is
+func (s *service) SetIsDebug(is bool) *service {
+	isDebug = is
 	return s
 }
 
@@ -76,16 +73,15 @@ func multiProcessRun(taskName string, method taskMethod) {
 		for i := 0; i < workerNum; i++ {
 
 			go func(workerNum int) {
-				if isLog {
-					log.Printf("Task \"%s\" is running, current worker is %d, ", name, workerNum)
-				}
+				Debug("Task \"%s\" is running, current worker is %d, ", name, workerNum)
+
 				for {
 					sleepSecond := 1
 
 					err := method(workerNum)
-					if err != nil {
-						log.Printf("but it get error :%s", err.Error())
 
+					if err != nil {
+						Error("but it get error :%s", err.Error())
 						sleepSecond = 3
 					}
 
@@ -101,15 +97,14 @@ func singleProcessRun(taskName string, method taskMethod) {
 
 	go func(name string) {
 
+		Debug("Task \"%s\" is running, ", name)
+
 		for {
 			sleepSecond := 1
-			if isLog {
-				log.Printf("Task \"%s\" is running, ", name)
-			}
+
 			err := method(0)
 			if err != nil {
-				log.Printf("but it get error :%s", err.Error())
-
+				Error("but it get error :%s", err.Error())
 				sleepSecond = 3
 			}
 
