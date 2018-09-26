@@ -9,7 +9,7 @@ var isDebug bool = true
 
 func Debug(format string, msg ...interface{}) {
 	if isDebug {
-		log.Println(fmt.Sprintf(format, msg))
+		log.Println(fmt.Sprintf(format, msg...))
 	}
 }
 

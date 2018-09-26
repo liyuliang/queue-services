@@ -73,7 +73,7 @@ func multiProcessRun(taskName string, method taskMethod) {
 		for i := 0; i < workerNum; i++ {
 
 			go func(workerNum int) {
-				Debug("Task \"%s\" is running, current worker is %d, ", name, workerNum)
+				Debug("[%s] is running, current worker is %d", name, workerNum)
 
 				for {
 					sleepSecond := 1
@@ -97,7 +97,7 @@ func singleProcessRun(taskName string, method taskMethod) {
 
 	go func(name string) {
 
-		Debug("Task \"%s\" is running, ", name)
+		Debug("Task %s is running, ", name)
 
 		for {
 			sleepSecond := 1
