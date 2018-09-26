@@ -97,7 +97,7 @@ func singleProcessRun(taskName string, method taskMethod) {
 
 	go func(name string) {
 
-		Debug("Task %s is running, ", name)
+		Debug("[%s] is running, ", name)
 
 		for {
 			sleepSecond := 1
