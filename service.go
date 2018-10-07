@@ -81,7 +81,7 @@ func multiProcessRun(taskName string, method taskMethod) {
 					err := method(workerNum)
 
 					if err != nil {
-						Error("but it get error :%s", err.Error())
+						Error("[%s] get error :%s", name, err.Error())
 						sleepSecond = 3
 					}
 
@@ -104,7 +104,7 @@ func singleProcessRun(taskName string, method taskMethod) {
 
 			err := method(0)
 			if err != nil {
-				Error("but it get error :%s", err.Error())
+				Error("[%s] get error :%s", name, err.Error())
 				sleepSecond = 3
 			}
 
