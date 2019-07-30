@@ -14,9 +14,9 @@ func Debug(format string, msg ...interface{}) {
 }
 
 func Info(format string, msg ...interface{}) {
-	Debug(format, msg)
+	Debug(format, msg...)
 }
 
 func Error(format string, msg ...interface{}) {
-	Debug(format, msg)
+	Debug(format, msg...)
 }
